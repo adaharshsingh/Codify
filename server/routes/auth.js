@@ -32,10 +32,12 @@ router.post('/google', async (req, res) => {
       { expiresIn: '30d' }
     );
 
+    const isProd = process.env.NODE_ENV === 'production';
     res
       .cookie('codify_token', token, {
         httpOnly: true,
-        sameSite: 'lax',
+        sameSite: isProd ? 'none' : 'lax',
+        secure: isProd,
         maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
       })
       .json({ id: user._id, name, email, picture });
@@ -59,7 +61,11 @@ router.get('/me', (req, res) => {
 
 // POST /api/auth/logout
 router.post('/logout', (_req, res) => {
-  res.clearCookie('codify_token').json({ ok: true });
+  const isProd = process.env.NODE_ENV === 'production';
+  res.clearCookie('codify_token', {
+    sameSite: isProd ? 'none' : 'lax',
+    secure: isProd,
+  }).json({ ok: true });
 });
 
 export default router;

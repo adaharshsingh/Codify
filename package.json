@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "concurrently \"node server/index.js\" \"npm --prefix client run dev\"",
     "server": "node server/index.js",
+    "start": "node server/index.js",
     "client": "npm --prefix client run dev",
     "install:all": "npm install && npm --prefix client install"
   },
@@ -19,5 +20,8 @@
     "mongoose": "^9.4.1",
     "node-html-parser": "^7.1.0",
     "uuid": "^9.0.1"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }
