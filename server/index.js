@@ -17,7 +17,14 @@ const app  = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:5173',
+  origin: (origin, callback) => {
+    const allowed = [
+      'http://localhost:5173',
+      'http://localhost:3000',
+      process.env.CLIENT_URL,
+    ].filter(Boolean);
+    callback(null, allowed.includes(origin) || !origin);
+  },
   credentials: true,
 }));
 app.use(express.json());
