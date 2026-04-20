@@ -23,12 +23,19 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 
+// Fix for Google GSI: Allow communication between opener and popup
+app.use((req, res, next) => {
+  res.setHeader('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
+  next();
+});
+
 app.use('/api/auth',         authRouter);
 app.use('/api/problems',     problemsRouter);
 app.use('/api/progress',     progressRouter);
 app.use('/api/sheets',       sheetsRouter);
 app.use('/api/fetch-problem', fetchRouter);
 
+app.get('/', (_req, res) => res.send('Codify API is running...'));
 app.get('/api/health', (_req, res) => res.json({ status: 'ok' }));
 
 connectDB().then(() =>
