@@ -38,6 +38,7 @@ router.post('/google', async (req, res) => {
         httpOnly: true,
         sameSite: isProd ? 'none' : 'lax',
         secure: isProd,
+        path: '/',
         maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
       })
       .json({ id: user._id, name, email, picture });
@@ -65,6 +66,7 @@ router.post('/logout', (_req, res) => {
   res.clearCookie('codify_token', {
     sameSite: isProd ? 'none' : 'lax',
     secure: isProd,
+    path: '/',
   }).json({ ok: true });
 });
 
