@@ -52,11 +52,26 @@ function parseLeetCodeContent(html) {
   let m;
   while ((m = exRe.exec(text)) !== null) {
     const block = m[1];
-    examples.push({
-      input:       (block.match(/Input:\s*([^\n]+)/i)?.[1] || '').trim(),
-      output:      (block.match(/Output:\s*([^\n]+)/i)?.[1] || '').trim(),
-      explanation: (block.match(/Explanation:\s*([^\n]+)/i)?.[1] || '').trim(),
-    });
+    
+    // Extract fields more carefully, capturing everything up to the next field
+    const inputMatch = block.match(/Input:\s*([\s\S]+?)(?=\nOutput:|$)/i);
+    const outputMatch = block.match(/Output:\s*([\s\S]+?)(?=\nExplanation:|$)/i);
+    const explanationMatch = block.match(/Explanation:\s*([\s\S]+?)$/i);
+    
+    const input = inputMatch 
+      ? inputMatch[1].trim().split('\n')[0] // first line only
+      : '';
+    const output = outputMatch 
+      ? outputMatch[1].trim().split('\n')[0] // first line only (remove dupes)
+      : '';
+    const explanation = explanationMatch 
+      ? explanationMatch[1].trim().split('\n')[0] // first line only (remove dupes)
+      : '';
+    
+    // Only add if we have at least input and output
+    if (input || output) {
+      examples.push({ input, output, explanation });
+    }
   }
   return { statement, constraints, examples };
 }
