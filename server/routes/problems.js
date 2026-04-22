@@ -7,10 +7,13 @@ const router = Router();
 // All routes require auth
 router.use(authMiddleware);
 
-// GET /api/problems/topics — lightweight list for this user
+// GET /api/problems/topics?sheetId=... — lightweight list for this sheet
 router.get('/topics', async (req, res) => {
   try {
-    const topics = await Topic.find({ userId: req.user.id }).lean();
+    const { sheetId } = req.query;
+    if (!sheetId) return res.status(400).json({ error: 'sheetId required' });
+    
+    const topics = await Topic.find({ userId: req.user.id, sheetId }).lean();
     const lite = topics.map((t) => ({
       id: t._id,
       title: t.title,
@@ -42,13 +45,16 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// POST /api/problems/topics — create topic
+// POST /api/problems/topics?sheetId=... — create topic in sheet
 router.post('/topics', async (req, res) => {
   const { title, icon, color } = req.body;
+  const { sheetId } = req.query;
   if (!title) return res.status(400).json({ error: 'title required' });
+  if (!sheetId) return res.status(400).json({ error: 'sheetId required' });
   try {
     const topic = await Topic.create({
       userId: req.user.id,
+      sheetId,
       title,
       icon: icon || '📝',
       color: color || 'navy',

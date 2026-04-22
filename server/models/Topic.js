@@ -13,6 +13,7 @@ const problemSchema = new mongoose.Schema({
 
 const topicSchema = new mongoose.Schema({
   userId:   { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  sheetId:  { type: mongoose.Schema.Types.ObjectId, ref: 'Sheet', required: true },
   title:    { type: String, required: true },
   icon:     { type: String, default: '📝' },
   color:    { type: String, default: 'navy' },

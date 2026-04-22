@@ -10,7 +10,7 @@ const COLORS = [
   { key: 'rose',    label: 'Rose',   swatch: 'bg-rose-500'    },
 ];
 
-export default function AddTopicModal({ onAdded, onClose }) {
+export default function AddTopicModal({ sheetId, onAdded, onClose }) {
   const [form,   setForm]   = useState({ title: '', icon: '📝', color: 'violet' });
   const [saving, setSaving] = useState(false);
   const [err,    setErr]    = useState('');
@@ -20,7 +20,7 @@ export default function AddTopicModal({ onAdded, onClose }) {
     if (!form.title.trim()) { setErr('Topic name is required'); return; }
     setSaving(true);
     try {
-      const topic = await createTopic({ title: form.title.trim(), icon: form.icon, color: form.color });
+      const topic = await createTopic(sheetId, { title: form.title.trim(), icon: form.icon, color: form.color });
       onAdded(topic);
       onClose();
     } catch {

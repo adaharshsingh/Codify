@@ -23,7 +23,7 @@ export default function Sheet() {
 
   // Load topics + progress + sheet meta on mount
   useEffect(() => {
-    const p1 = getTopics();
+    const p1 = getTopics(sheetId);
     const p2 = getProgress(sessionId);
     const p3 = getSheets(user).catch(() => []);
 
@@ -36,7 +36,7 @@ export default function Sheet() {
       })
       .catch(() => p1.then(setTopics))
       .finally(() => setLoadingTopics(false));
-  }, []);
+  }, [sheetId]);
 
   // Load full problem when selected
   useEffect(() => {
@@ -185,6 +185,7 @@ export default function Sheet() {
                     onProblemClick={setActiveProblemId}
                     onTopicsChange={setTopics}
                     tab={tab}
+                    sheetId={sheetId}
                     sheetName={sheetMeta ? `${sheetMeta.emoji} ${sheetMeta.name}` : 'CP Revision Sheet'}
                     sheetDesc={sheetMeta?.description}
                   />

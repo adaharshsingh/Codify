@@ -16,12 +16,12 @@ export const googleAuth = (credential) =>
 export const getMe = () =>
   api.get('/auth/me').then((r) => r.data);
 
-// ── Problems ────────────────────────────────────
-export const getTopics    = ()    => api.get('/problems/topics').then((r) => r.data);
+// ── Topics ────────────────────────────────────
+export const getTopics    = (sheetId) => api.get('/problems/topics', { params: { sheetId } }).then((r) => r.data);
 export const getProblem   = (id)  => api.get(`/problems/${id}`).then((r) => r.data);
 
 // ── Topic CRUD ──────────────────────────────────
-export const createTopic  = (data)         => api.post('/problems/topics', data).then((r) => r.data);
+export const createTopic  = (sheetId, data)   => api.post('/problems/topics', data, { params: { sheetId } }).then((r) => r.data);
 export const deleteTopic  = (id)           => api.delete(`/problems/topics/${id}`).then((r) => r.data);
 
 // ── Problem CRUD ────────────────────────────────

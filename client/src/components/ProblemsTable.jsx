@@ -206,7 +206,7 @@ function TopicSection({ topic, progress, onProblemClick, onTopicChange, revision
 // ── Main ProblemsTable export ────────────────────────────────────────────
 export default function ProblemsTable({
   topics, progress, onProblemClick, onTopicsChange,
-  tab, sheetName, sheetDesc,
+  tab, sheetId, sheetName, sheetDesc,
 }) {
   const [showAddTopic, setShowAddTopic] = useState(false);
   const [search,       setSearch]       = useState('');
@@ -340,7 +340,7 @@ export default function ProblemsTable({
       </div>
 
       {showAddTopic && (
-        <AddTopicModal onAdded={handleTopicAdded} onClose={() => setShowAddTopic(false)} />
+        <AddTopicModal sheetId={sheetId} onAdded={handleTopicAdded} onClose={() => setShowAddTopic(false)} />
       )}
     </div>
   );
