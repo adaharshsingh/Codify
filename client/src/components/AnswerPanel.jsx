@@ -6,7 +6,7 @@ function debounce(fn, ms) {
   return (...args) => { clearTimeout(timer); timer = setTimeout(() => fn(...args), ms); };
 }
 
-export default function AnswerPanel({ problemId, sessionId }) {
+export default function AnswerPanel({ problemId, sessionId, problem }) {
   const { progress, updateProgress } = useApp();
   const entry   = progress[problemId] || {};
 
@@ -118,6 +118,38 @@ export default function AnswerPanel({ problemId, sessionId }) {
           </button>
 
           <div className="flex-1" />
+
+          {/* Platform links */}
+          {problem && (
+            <div className="flex items-center gap-1.5">
+              {problem.lcLink && (
+                <a
+                  href={problem.lcLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  title="Open on LeetCode"
+                  className="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-navy-800 hover:bg-gold-500/20 text-navy-400 hover:text-gold-400 transition-all border border-navy-700 hover:border-gold-500/40"
+                >
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M23.4 10.3c1-.5 1.4-1.6.9-2.6l-4-8c-.5-1-1.6-1.4-2.6-.9L.6 13.7c-1 .5-1.4 1.6-.9 2.6l4 8c.5 1 1.6 1.4 2.6.9l17.1-8.6zM7 18l3-3-3-3v6z"/>
+                  </svg>
+                </a>
+              )}
+              {problem.cfLink && (
+                <a
+                  href={problem.cfLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  title="Open on Codeforces"
+                  className="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-navy-800 hover:bg-red-500/20 text-navy-400 hover:text-red-400 transition-all border border-navy-700 hover:border-red-500/40"
+                >
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M3 3h4v4H3V3zm7 0h4v4h-4V3zm7 0h4v4h-4V3zM3 10h4v4H3v-4zm7 0h4v4h-4v-4zm7 0h4v4h-4v-4zM3 17h4v4H3v-4zm7 0h4v4h-4v-4z"/>
+                  </svg>
+                </a>
+              )}
+            </div>
+          )}
 
           {/* Copy */}
           <button

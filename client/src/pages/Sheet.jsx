@@ -214,7 +214,7 @@ export default function Sheet() {
               {/* Answer — right */}
               <div className="flex-1 overflow-hidden">
                 {problemDetail && (
-                  <AnswerPanel problemId={activeProblemId} sessionId={sessionId} />
+                  <AnswerPanel problemId={activeProblemId} sessionId={sessionId} problem={problemDetail} />
                 )}
               </div>
             </div>

@@ -17,24 +17,45 @@ export default function QuestionPanel({ problem }) {
             <h2 className="text-white font-bold text-lg leading-tight">{problem.title}</h2>
           </div>
         </div>
-        <div className="flex items-center gap-2 flex-wrap">
-          <span className={`text-xs px-2.5 py-1 rounded-full font-semibold ${diff.badge}`}>
-            {problem.difficulty}
-          </span>
-          <span className="text-xs px-2.5 py-1 rounded-full bg-navy-800 text-navy-300 border border-navy-700">
-            {problem.topicTitle}
-          </span>
-          <span className="text-xs text-navy-500">{problem.platform}</span>
-          {problem.lcLink && (
-            <a
-              href={problem.lcLink}
-              target="_blank"
-              rel="noreferrer"
-              className="text-xs text-gold-400 hover:text-gold-300 transition-colors flex items-center gap-1 ml-auto"
-            >
-              Open ↗
-            </a>
-          )}
+        <div className="flex items-center gap-2 flex-wrap justify-between">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className={`text-xs px-2.5 py-1 rounded-full font-semibold ${diff.badge}`}>
+              {problem.difficulty}
+            </span>
+            <span className="text-xs px-2.5 py-1 rounded-full bg-navy-800 text-navy-300 border border-navy-700">
+              {problem.topicTitle}
+            </span>
+          </div>
+          
+          {/* Platform links */}
+          <div className="flex items-center gap-2">
+            {problem.lcLink && (
+              <a
+                href={problem.lcLink}
+                target="_blank"
+                rel="noreferrer"
+                title="Open on LeetCode"
+                className="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-navy-800 hover:bg-gold-500/20 text-navy-400 hover:text-gold-400 transition-all border border-navy-700 hover:border-gold-500/40"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M23.4 10.3c1-.5 1.4-1.6.9-2.6l-4-8c-.5-1-1.6-1.4-2.6-.9L.6 13.7c-1 .5-1.4 1.6-.9 2.6l4 8c.5 1 1.6 1.4 2.6.9l17.1-8.6zM7 18l3-3-3-3v6z"/>
+                </svg>
+              </a>
+            )}
+            {problem.cfLink && (
+              <a
+                href={problem.cfLink}
+                target="_blank"
+                rel="noreferrer"
+                title="Open on Codeforces"
+                className="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-navy-800 hover:bg-red-500/20 text-navy-400 hover:text-red-400 transition-all border border-navy-700 hover:border-red-500/40"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M3 3h4v4H3V3zm7 0h4v4h-4V3zm7 0h4v4h-4V3zM3 10h4v4H3v-4zm7 0h4v4h-4v-4zm7 0h4v4h-4v-4zM3 17h4v4H3v-4zm7 0h4v4h-4v-4z"/>
+                </svg>
+              </a>
+            )}
+          </div>
         </div>
       </div>
 

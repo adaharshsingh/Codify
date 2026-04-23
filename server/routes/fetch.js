@@ -51,25 +51,25 @@ function parseLeetCodeContent(html) {
   const exRe = /Example\s*\d+[:\s]+([\s\S]+?)(?=Example\s*\d+:|Constraints?:|$)/gi;
   let m;
   while ((m = exRe.exec(text)) !== null) {
-    const block = m[1];
+    const block = m[1].trim();
     
-    // Extract fields more carefully, capturing everything up to the next field
-    const inputMatch = block.match(/Input:\s*([\s\S]+?)(?=\nOutput:|$)/i);
-    const outputMatch = block.match(/Output:\s*([\s\S]+?)(?=\nExplanation:|$)/i);
-    const explanationMatch = block.match(/Explanation:\s*([\s\S]+?)$/i);
+    // Use regex to extract each field, stopping at the next field label
+    const inputMatch = block.match(/^Input:\s*([\s\S]*?)(?=^Output:|^Explanation:|$)/m);
+    const outputMatch = block.match(/^Output:\s*([\s\S]*?)(?=^Explanation:|$)/m);
+    const explanationMatch = block.match(/^Explanation:\s*([\s\S]*?)$/m);
     
     const input = inputMatch 
-      ? inputMatch[1].trim().split('\n')[0] // first line only
+      ? inputMatch[1].trim().split('\n')[0]  // first line only
       : '';
     const output = outputMatch 
-      ? outputMatch[1].trim().split('\n')[0] // first line only (remove dupes)
+      ? outputMatch[1].trim().split('\n')[0]  // first line only
       : '';
     const explanation = explanationMatch 
-      ? explanationMatch[1].trim().split('\n')[0] // first line only (remove dupes)
+      ? explanationMatch[1].trim().split('\n')[0]  // first line only
       : '';
     
-    // Only add if we have at least input and output
-    if (input || output) {
+    // Only add if we have input and output
+    if (input && output) {
       examples.push({ input, output, explanation });
     }
   }
